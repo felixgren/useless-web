@@ -23,8 +23,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement)
 
-        window.addEventListener('resize', () => 
-        {
+        window.addEventListener('resize', () => {
             let width = window.innerWidth;
             let height = window.innerHeight;
             renderer.setSize(width, height);
@@ -37,10 +36,11 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.1;
         controls.minDistance = 3;
-		controls.maxDistance = 100;
+        controls.maxDistance = 100;
 
         // Contains all vertices & faces (points & fill) for a box
         const geometry = new THREE.BoxGeometry(1, 1, 1);
+        // const geometry = new THREE.BoxGeometry(2, 1.1, 1.1);
 
         function makeInstance(geometry, x, y) {
             // Material to color it
@@ -48,7 +48,7 @@
             // Cube mesh. Mesh object takes geometry and applies a material.
             const cube = new THREE.Mesh(geometry, material);
             // Adds the cube, default coords 0,0,0
-            scene.add(cube); 
+            scene.add(cube);
 
             cube.position.x = x;
             cube.position.y = y;
@@ -56,20 +56,44 @@
             return cube;
         }
 
-        const cubes = [
-            makeInstance(geometry, -2, 2),
-            makeInstance(geometry, 0, 2),
-            makeInstance(geometry, 2, 2),
-            makeInstance(geometry, -2, 0),
-            makeInstance(geometry, 0, 0),
-            makeInstance(geometry, 2, 0),
-            makeInstance(geometry, -2, -2),
-            makeInstance(geometry, 0, -2),
-            makeInstance(geometry, 2, -2)
-        ];
+        // const cubes = [
+        //     makeInstance(geometry, -2, 2),
+        //     makeInstance(geometry, 0, 2),
+        //     makeInstance(geometry, 2, 2),
+        //     makeInstance(geometry, -2, 0),
+        //     makeInstance(geometry, 0, 0),
+        //     makeInstance(geometry, 2, 0),
+        //     makeInstance(geometry, -2, -2),
+        //     makeInstance(geometry, 0, -2),
+        //     makeInstance(geometry, 2, -2)
+        // ];
+
+        const cubeCount = 10;
+        const cubes = [];
+        for (let x = 0; x < cubeCount; x++) {
+            for (let y = 0; y < cubeCount; y++) {
+                const positionX = (-cubeCount / 2) + x * 1.1;
+                const positionY = (-cubeCount / 2) + y * 1.1;
+                cubes.push(makeInstance(geometry, positionX, positionY))
+            }
+        }
+
+        // const geometry = new THREE.BoxGeometry(1, 1, 1);
+        // const material = new THREE.MeshNormalMaterial();
+        // const cubeGroup = new THREE.Group();
+
+        // for (let i = 0; i < 10; i++) {
+        //     const cube = new THREE.Mesh (geometry, material);
+        //     cube.position.x = i * 1.1;
+        //     cube.position.y = 0;
+        //     cubeGroup.add(cube);
+        // }
+        // scene.add(cubeGroup);
+        // console.log(cubeGroup);
+
 
         // Avoid cam being inside of it 
-        camera.position.z = 10;
+        camera.position.z = 20;
         controls.update();
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
@@ -78,9 +102,9 @@
 
             // Runs every refresh          
             cubes.forEach((cube, speed) => {
-                const rotation = 0.01 + speed * 0.003; 
+                const rotation = 0.01 + speed * 0.000001;
                 cube.rotation.x += rotation;
-                cube.rotation.y += rotation;
+                cube.rotation.y += 0.01;
             });
 
             controls.update();
