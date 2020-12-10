@@ -24,23 +24,45 @@
 
         // Contains all vertices & faces (points & fill) for a box
         const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // Material to color it
-        const material = new THREE.MeshNormalMaterial();
-        // Cube mesh. Mesh object takes geometry and applies a material.
-        const cube = new THREE.Mesh(geometry, material);
-        // Adds the cube, default coords 0,0,0
-        scene.add(cube);
+
+        function makeInstance(geometry, x, y) {
+            // Material to color it
+            const material = new THREE.MeshNormalMaterial();
+            // Cube mesh. Mesh object takes geometry and applies a material.
+            const cube = new THREE.Mesh(geometry, material);
+            // Adds the cube, default coords 0,0,0
+            scene.add(cube); 
+
+            cube.position.x = x;
+            cube.position.y = y;
+
+            return cube;
+        }
+
+        const cubes = [
+            makeInstance(geometry, -2, 2),
+            makeInstance(geometry, 0, 2),
+            makeInstance(geometry, 2, 2),
+            makeInstance(geometry, -2, 0),
+            makeInstance(geometry, 0, 0),
+            makeInstance(geometry, 2, 0),
+            makeInstance(geometry, -2, -2),
+            makeInstance(geometry, 0, -2),
+            makeInstance(geometry, 2, -2)
+        ];
 
         // Avoid cam being inside of it 
-        camera.position.z = 5;
+        camera.position.z = 10;
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
         function animate() {
             requestAnimationFrame(animate);
 
-            // Runs every refresh
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+            // Runs every refresh            
+            cubes.forEach(cube => {
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+            });
 
             renderer.render(scene, camera);
         }
