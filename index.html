@@ -11,6 +11,7 @@
 <body>
     <script type="module">
         import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
         // Scene
         const scene = new THREE.Scene();
@@ -30,6 +31,13 @@
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
         });
+
+        // Orbital control
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.1;
+        controls.minDistance = 3;
+		controls.maxDistance = 100;
 
         // Contains all vertices & faces (points & fill) for a box
         const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -62,6 +70,7 @@
 
         // Avoid cam being inside of it 
         camera.position.z = 10;
+        controls.update();
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
         function animate() {
@@ -74,6 +83,7 @@
                 cube.rotation.y += rotation;
             });
 
+            controls.update();
             renderer.render(scene, camera);
         }
         animate();
