@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <script src="js/three.js"></script>
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
 
-    <script>
         // Scene
         const scene = new THREE.Scene();
         // Camera, which one, fov (degrees), aspect ratio, render distances min max
@@ -23,7 +23,7 @@
         document.body.appendChild(renderer.domElement)
 
         // Contains all vertices & faces (points & fill) for a box
-        const geometry = new THREE.BoxGeometry();
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
         // Material to color it
         const material = new THREE.MeshNormalMaterial();
         // Cube mesh. Mesh object takes geometry and applies a material.
@@ -46,7 +46,6 @@
         }
         animate();
     </script>
-
 </body>
 
 </html>

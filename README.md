@@ -2,4 +2,6 @@
 
 # The Useless Web
 
+<strong>LIVE: https://useless-web.vercel.app/</strong>
+
 Project to create a useless website!
