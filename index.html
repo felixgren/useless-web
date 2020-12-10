@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello three.js!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+
+    <script>
+        // Scene
+        const scene = new THREE.Scene();
+        // Camera, which one, fov (degrees), aspect ratio, render distances min max
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // WebGL but others supported as well
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement)
+
+        // Contains all vertices & faces (points & fill) for a box
+        const geometry = new THREE.BoxGeometry();
+        // Material to color it
+        const material = new THREE.MeshNormalMaterial();
+        // Cube mesh. Mesh object takes geometry and applies a material.
+        const cube = new THREE.Mesh(geometry, material);
+        // Adds the cube, default coords 0,0,0
+        scene.add(cube);
+
+        // Avoid cam being inside of it 
+        camera.position.z = 5;
+
+        // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Runs every refresh
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+
+</body>
+
+</html>
