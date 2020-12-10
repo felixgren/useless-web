@@ -58,10 +58,11 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Runs every refresh            
-            cubes.forEach(cube => {
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
+            // Runs every refresh          
+            cubes.forEach((cube, speed) => {
+                const rotation = 0.01 + speed * 0.003; 
+                cube.rotation.x += rotation;
+                cube.rotation.y += rotation;
             });
 
             renderer.render(scene, camera);
