@@ -68,12 +68,12 @@
         //     makeInstance(geometry, 2, -2)
         // ];
 
-        const cubeCount = 10;
+        const cubeCount = 21;
         const cubes = [];
         for (let x = 0; x < cubeCount; x++) {
             for (let y = 0; y < cubeCount; y++) {
-                const positionX = (-cubeCount / 2) + x * 1.1;
-                const positionY = (-cubeCount / 2) + y * 1.1;
+                const positionX = ((-cubeCount - 1) / 2) + x * 1.1;
+                const positionY = ((-cubeCount - 1) / 2) + y * 1.1;
                 cubes.push(makeInstance(geometry, positionX, positionY))
             }
         }
@@ -93,11 +93,11 @@
 
 
         // Avoid cam being inside of it 
-        camera.position.z = 20;
+        camera.position.z = 30;
         controls.update();
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
-        function animate() {
+        function animate(ye) {
             requestAnimationFrame(animate);
 
             // Runs every refresh          
@@ -105,6 +105,13 @@
                 const rotation = 0.01 + speed * 0.000001;
                 cube.rotation.x += rotation;
                 cube.rotation.y += 0.01;
+
+                // cube.position.y += 0.01 + speed * 0.0005;
+                // cube.position.x += 0.01 + speed * 0.0005;
+            });
+
+            cubes.forEach((cube) => {
+                cube.position.y = Math.sin(ye / 300 + cube.position.x / 6);
             });
 
             controls.update();
