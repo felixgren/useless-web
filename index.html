@@ -13,42 +13,27 @@
         import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
         import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
-        // Scene
         const scene = new THREE.Scene();
-        // Camera, which one, fov (degrees), aspect ratio, render distances min max
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        scene.background = new THREE.Color(0x000000);
 
-        // WebGL but others supported as well
-        const renderer = new THREE.WebGLRenderer();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);  // Camera, which one, fov (degrees), aspect ratio, render distances min max
+        camera.position.z = 30;
+
+        const renderer = new THREE.WebGLRenderer(); // WebGL but others supported as well
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement)
+        document.body.appendChild(renderer.domElement);
 
-        window.addEventListener('resize', () => {
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-            renderer.setSize(width, height);
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-        });
-
-        // Orbital control
-        const controls = new OrbitControls(camera, renderer.domElement);
+        const controls = new OrbitControls(camera, renderer.domElement); // Orbital control
         controls.enableDamping = true;
         controls.dampingFactor = 0.1;
         controls.minDistance = 3;
         controls.maxDistance = 100;
 
-        // Contains all vertices & faces (points & fill) for a box
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // const geometry = new THREE.BoxGeometry(2, 1.1, 1.1);
-
-        function makeInstance(geometry, x, y) {
-            // Material to color it
-            const material = new THREE.MeshNormalMaterial();
-            // Cube mesh. Mesh object takes geometry and applies a material.
-            const cube = new THREE.Mesh(geometry, material);
-            // Adds the cube, default coords 0,0,0
-            scene.add(cube);
+        const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
+        const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
+        function makeInstance(geometry, material, x, y) {
+            const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
+            scene.add(cube); // Adds the cube, default coords 0,0,0
 
             cube.position.x = x;
             cube.position.y = y;
@@ -56,62 +41,35 @@
             return cube;
         }
 
-        // const cubes = [
-        //     makeInstance(geometry, -2, 2),
-        //     makeInstance(geometry, 0, 2),
-        //     makeInstance(geometry, 2, 2),
-        //     makeInstance(geometry, -2, 0),
-        //     makeInstance(geometry, 0, 0),
-        //     makeInstance(geometry, 2, 0),
-        //     makeInstance(geometry, -2, -2),
-        //     makeInstance(geometry, 0, -2),
-        //     makeInstance(geometry, 2, -2)
-        // ];
-
         const cubeCount = 21;
         const cubes = [];
         for (let x = 0; x < cubeCount; x++) {
             for (let y = 0; y < cubeCount; y++) {
                 const positionX = ((-cubeCount - 1) / 2) + x * 1.1;
                 const positionY = ((-cubeCount - 1) / 2) + y * 1.1;
-                cubes.push(makeInstance(geometry, positionX, positionY))
+                cubes.push(makeInstance(geometry, material, positionX, positionY))
             }
         }
 
-        // const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // const material = new THREE.MeshNormalMaterial();
-        // const cubeGroup = new THREE.Group();
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
 
-        // for (let i = 0; i < 10; i++) {
-        //     const cube = new THREE.Mesh (geometry, material);
-        //     cube.position.x = i * 1.1;
-        //     cube.position.y = 0;
-        //     cubeGroup.add(cube);
-        // }
-        // scene.add(cubeGroup);
-        // console.log(cubeGroup);
-
-
-        // Avoid cam being inside of it 
-        camera.position.z = 30;
         controls.update();
 
-        // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval
-        function animate(ye) {
+        // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
+        function animate() {
+
             requestAnimationFrame(animate);
 
-            // Runs every refresh          
             cubes.forEach((cube, speed) => {
                 const rotation = 0.01 + speed * 0.000001;
                 cube.rotation.x += rotation;
                 cube.rotation.y += 0.01;
-
-                // cube.position.y += 0.01 + speed * 0.0005;
-                // cube.position.x += 0.01 + speed * 0.0005;
-            });
-
-            cubes.forEach((cube) => {
-                cube.position.y = Math.sin(ye / 300 + cube.position.x / 6);
             });
 
             controls.update();
