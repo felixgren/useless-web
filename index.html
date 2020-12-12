@@ -14,6 +14,7 @@
         import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
         let cubes, controls, camera, scene, renderer;
+        let lastFrameTime = 0;
 
         init();
         animate();
@@ -51,8 +52,8 @@
             cubes = [];
             for (let x = 0; x < cubeCount; x++) {
                 for (let y = 0; y < cubeCount; y++) {
-                    const positionX = ((-cubeCount - 1) / 2) + x * 1.1;
-                    const positionY = ((-cubeCount - 1) / 2) + y * 1.1;
+                    const positionX = (x - ((cubeCount - 1) / 2)) * 1.1;
+                    const positionY = (y - ((cubeCount - 1) / 2)) * 1.1;
                     cubes.push(makeInstance(geometry, material, positionX, positionY))
                 }
             }
@@ -66,23 +67,45 @@
             });
 
             controls.update();
+
+            // for (let i = 0; i < 10; i++) {
+            //     console.log(`hej ${i}`);
+            // }
+
+            // cubes.forEach((cube, speed) => {
+            //     console.log('hej');
+            //     console.log(speed);
+            // });
+
         }
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
-        function animate() {
+        function animate(timestamp) {
 
             requestAnimationFrame(animate);
 
+            // setTimeout(function () {
+            //     requestAnimationFrame(animate);
+            // }, 1000 / 60);
+
+            const deltaTime = (timestamp - lastFrameTime) * 0.001;
+            lastFrameTime = timestamp;
+
             cubes.forEach((cube, speed) => {
                 const rotation = 0.01 + speed * 0.000001;
-                cube.rotation.x += rotation;
-                cube.rotation.y += 0.01;
+                // cube.rotation.x += rotation;
+                // cube.rotation.y += 0.01;
+
+                cube.rotation.y += 0.01 * deltaTime;
             });
+
+            // console.log('hej hej')
+
 
             controls.update();
             renderer.render(scene, camera);
         }
-        
+
     </script>
 </body>
 
