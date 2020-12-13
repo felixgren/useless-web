@@ -39,24 +39,29 @@
 
             const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
             const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
-            function makeInstance(geometry, material, x, y) {
+            function makeInstance(geometry, material, x, y, z) {
                 const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
                 scene.add(cube); // Adds the cube, default coords 0,0,0
 
                 cube.position.x = x;
                 cube.position.y = y;
+                cube.position.z = z;
 
                 return cube;
             }
 
             const cubeCountX = 10;
             const cubeCountY = 10;
+            const cubeCountZ = 1;
             cubes = [];
             for (let x = 0; x < cubeCountX; x++) {
                 for (let y = 0; y < cubeCountY; y++) {
-                    const positionX = (x - ((cubeCountX - 1) / 2)) * 1.5;
-                    const positionY = (y - ((cubeCountY - 1) / 2)) * 1.5;
-                    cubes.push(makeInstance(geometry, material, positionX, positionY))
+                    for (let z = 0; z < cubeCountZ; z++) {
+                        const positionX = (x - ((cubeCountX - 1) / 2)) * 1.1;
+                        const positionY = (y - ((cubeCountY - 1) / 2)) * 1.1;
+                        const positionZ = (z - ((cubeCountZ - 1) / 2)) * 1.1;
+                        cubes.push(makeInstance(geometry, material, positionX, positionY, positionZ))
+                    }
                 }
             }
 
@@ -80,16 +85,16 @@
             const delta = clock.getDelta() * 60;
             let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-            cubes.forEach((cube, speed) => {
-                
+            cubes.forEach((cube, key) => {
+
                 // Wavy, should have X:1.1 Y:1.5 sizing
-                // cube.position.x = Math.tan(time * 0.6) * (0.2 * speed);
+                // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
                 // cube.scale.x = Math.sin(time) * 5;
                 // cube.scale.z = Math.tan(time * 0.5) * (10);
                 // cube.rotation.x = time;
                 // cube.rotation.y = time;
 
-                // cube.position.x = Math.tan(time * 0.6) * (0.2 * speed);
+                // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
                 // cube.position.y = Math.tan(time * 1) * 1;
                 // cube.scale.z = Math.tan(time * 0.5) * (10);
 
@@ -99,17 +104,31 @@
 
                 // cube.position.x = Math.tan( time * 1) * 5;
 
-                // cube.position.x = Math.tan( time * 0.005 * speed) * 5;
+                // cube.position.x = Math.tan( time * 0.005 * key) * 5;
                 // cube.rotation.x = Math.sin(time * 0.3);
                 // cube.rotation.y = Math.sin(time * 0.3);
+                // time += 10000
+
+                // cube.position.x = Math.tan( time * 0.005 * key) * 5;
+                // cube.position.y = Math.tan( time * 0.005 * key) * 5;
+                // cube.position.z = Math.tan( time * 0.009) * 5;
+                // cube.scale.x = Math.sin (time * 0.001 * key) * 10;
+                // cube.position.x = (time += 10000);
+
+                // cube.scale.y = Math.cos (time * 0.05 * key) * 5;
+                // cube.rotation.x = Math.sin(time * 1);
+                // cube.rotation.y = Math.sin(time * 1);
+                // cube.rotation.z = Math.sin(time * 1);
 
                 // time += 10000
 
-                // cube.position.x = Math.sin( time * 1) * (9);
+                // cube.position.x = Math.tan( time * 5) * (0.2 * key);
+                // cube.position.y = Math.sin( time * 1) * (0.2 * key);
             });
 
             controls.update();
             renderer.render(scene, camera);
+
         }
 
     </script>
