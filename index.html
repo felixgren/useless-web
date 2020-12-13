@@ -13,8 +13,9 @@
         import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
         import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
+        const clock = new THREE.Clock();
+
         let cubes, controls, camera, scene, renderer;
-        let lastFrameTime = 0;
 
         init();
         animate();
@@ -48,7 +49,7 @@
                 return cube;
             }
 
-            const cubeCount = 21;
+            const cubeCount = 10;
             cubes = [];
             for (let x = 0; x < cubeCount; x++) {
                 for (let y = 0; y < cubeCount; y++) {
@@ -68,39 +69,20 @@
 
             controls.update();
 
-            // for (let i = 0; i < 10; i++) {
-            //     console.log(`hej ${i}`);
-            // }
-
-            // cubes.forEach((cube, speed) => {
-            //     console.log('hej');
-            //     console.log(speed);
-            // });
-
         }
 
         // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
-        function animate(timestamp) {
+        function animate() {
 
             requestAnimationFrame(animate);
 
-            // setTimeout(function () {
-            //     requestAnimationFrame(animate);
-            // }, 1000 / 60);
-
-            const deltaTime = (timestamp - lastFrameTime) * 0.001;
-            lastFrameTime = timestamp;
+            const delta = clock.getDelta() * 165;
 
             cubes.forEach((cube, speed) => {
                 const rotation = 0.01 + speed * 0.000001;
-                // cube.rotation.x += rotation;
-                // cube.rotation.y += 0.01;
-
-                cube.rotation.y += 0.01 * deltaTime;
+                cube.rotation.x += rotation * delta;
+                cube.rotation.y += 0.01 * delta;
             });
-
-            // console.log('hej hej')
-
 
             controls.update();
             renderer.render(scene, camera);
