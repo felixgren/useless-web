@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello three.js!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
+
+        const clock = new THREE.Clock();
+
+        let cubes, controls, camera, scene, renderer;
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);  // Camera, which one, fov (degrees), aspect ratio, render distances min max
+            camera.position.z = 30;
+
+            renderer = new THREE.WebGLRenderer(); // WebGL but others supported as well
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement); // Orbital control
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.1;
+            controls.minDistance = 3;
+            controls.maxDistance = 100;
+
+            const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
+            const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
+            function makeInstance(geometry, material, x, y) {
+                const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
+                scene.add(cube); // Adds the cube, default coords 0,0,0
+
+                cube.position.x = x;
+                cube.position.y = y;
+
+                return cube;
+            }
+
+            const cubeCount = 20;
+            cubes = [];
+            for (let x = 0; x < cubeCount; x++) {
+                for (let y = 0; y < cubeCount; y++) {
+                    const positionX = (x - ((cubeCount - 1) / 2)) * 1.1;
+                    const positionY = (y - ((cubeCount - 1) / 2)) * 1.5;
+                    cubes.push(makeInstance(geometry, material, positionX, positionY))
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+
+            controls.update();
+
+        }
+
+        // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
+        function animate(timestamp) {
+
+            requestAnimationFrame(animate);
+
+            const delta = clock.getDelta() * 60;
+            let time = timestamp * 0.001; // Time elapsed ms → seconds 
+
+            cubes.forEach((cube, speed) => {
+
+                cube.position.x = Math.tan(time * 0.6) * (0.2 * speed); // Numbers set speed & length
+                // cube.position.y = Math.tan(time * 1) * 1;
+                cube.scale.x = Math.sin(time) * 5;
+                cube.scale.z = Math.tan(time * 0.5) * (10);
+                cube.rotation.x = time;
+                cube.rotation.y = time;
+            });
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+    </script>
+</body>
+
+</html>
