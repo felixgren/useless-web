@@ -49,12 +49,13 @@
                 return cube;
             }
 
-            const cubeCount = 20;
+            const cubeCountX = 10;
+            const cubeCountY = 10;
             cubes = [];
-            for (let x = 0; x < cubeCount; x++) {
-                for (let y = 0; y < cubeCount; y++) {
-                    const positionX = (x - ((cubeCount - 1) / 2)) * 1.1;
-                    const positionY = (y - ((cubeCount - 1) / 2)) * 1.5;
+            for (let x = 0; x < cubeCountX; x++) {
+                for (let y = 0; y < cubeCountY; y++) {
+                    const positionX = (x - ((cubeCountX - 1) / 2)) * 1.5;
+                    const positionY = (y - ((cubeCountY - 1) / 2)) * 1.5;
                     cubes.push(makeInstance(geometry, material, positionX, positionY))
                 }
             }
@@ -80,13 +81,31 @@
             let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
             cubes.forEach((cube, speed) => {
+                
+                // Wavy, should have X:1.1 Y:1.5 sizing
+                // cube.position.x = Math.tan(time * 0.6) * (0.2 * speed);
+                // cube.scale.x = Math.sin(time) * 5;
+                // cube.scale.z = Math.tan(time * 0.5) * (10);
+                // cube.rotation.x = time;
+                // cube.rotation.y = time;
 
-                cube.position.x = Math.tan(time * 0.6) * (0.2 * speed); // Numbers set speed & length
+                // cube.position.x = Math.tan(time * 0.6) * (0.2 * speed);
                 // cube.position.y = Math.tan(time * 1) * 1;
-                cube.scale.x = Math.sin(time) * 5;
-                cube.scale.z = Math.tan(time * 0.5) * (10);
-                cube.rotation.x = time;
-                cube.rotation.y = time;
+                // cube.scale.z = Math.tan(time * 0.5) * (10);
+
+                // cube.scale.x = Math.sin(time) * 50;
+                // cube.rotation.x = Math.sin(time * 0.2);
+                // cube.rotation.y = Math.sin(time * 0.2);
+
+                // cube.position.x = Math.tan( time * 1) * 5;
+
+                // cube.position.x = Math.tan( time * 0.005 * speed) * 5;
+                // cube.rotation.x = Math.sin(time * 0.3);
+                // cube.rotation.y = Math.sin(time * 0.3);
+
+                // time += 10000
+
+                // cube.position.x = Math.sin( time * 1) * (9);
             });
 
             controls.update();
