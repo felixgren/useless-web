@@ -25,6 +25,21 @@ function init() {
     controls.minDistance = 3;
     controls.maxDistance = 100;
 
+    const audioFile = '/assets/audio/lordechojustdoyou.mp3';
+    const listener = new THREE.AudioListener();
+    camera.add(listener); // Add listener to camera
+
+    new THREE.AudioLoader().load ( // Instantiate a loader and load with .load
+        audioFile, // songURL
+        function (buffer) { // onLoad callback
+        const song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
+        song.play();
+    },
+        function ( xhr ) { // onProgress callback
+        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        }
+    );
+
     const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
     const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
     function makeInstance(geometry, material, x, y, z) {
