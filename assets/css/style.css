@@ -3,6 +3,16 @@
     margin: 0;
 }
 
+:root {
+    --public-sans-font: 'Public Sans', sans-serif;
+    --roboto-font: 'Roboto', sans-serif;
+}
+
 body {
     background: tomato;
+}
+
+p {
+    font-family: var(--roboto-font);
+    font-size: 32px;
 }
