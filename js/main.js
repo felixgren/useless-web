@@ -53,8 +53,8 @@ function init() {
         return cube;
     }
 
-    const cubeCountX = 10;
-    const cubeCountY = 10;
+    const cubeCountX = 5;
+    const cubeCountY = 5;
     const cubeCountZ = 1;
     cubes = [];
     for (let x = 0; x < cubeCountX; x++) {
@@ -90,18 +90,23 @@ function animate(timestamp) {
 
     cubes.forEach((cube, key) => {
 
-        // Wavy, should have X:1.1 Y:1.5 sizing
-        if (time <= 5) {
-            cube.position.y = Math.sin(time * 1) * (0.2 * key);
-        } 
+        // if (time <= 5) {
+            // cube.position.x = Math.sin(time * 2) * (5);
+            // cube.position.x += 0.01;
+            // cube.position.x += Math.tan(time * 0.005) * 2;
+            // cube.position.x -= Math.sin(time * 0.005) * (1);
+        // } 
 
-        else if (time > 5 && time < 10) {
+        // else if (time > 5 && time < 10) {
 
-        }
+        // }
 
-        else if (time > 10) {
+        // else if (time > 10) {
 
-        }
+        // }
+
+        // cube.position.x = Math.sin( time * 0.6 ) * 9;
+        // cube.position.x += 2;
 
     });
 
