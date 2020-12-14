@@ -2,6 +2,7 @@ import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
 const clock = new THREE.Clock();
+const analyser = new THREE.AudioAnalyser();
 
 let cubes, controls, camera, scene, renderer;
 
@@ -29,16 +30,20 @@ function init() {
     const listener = new THREE.AudioListener();
     camera.add(listener); // Add listener to camera
 
-    new THREE.AudioLoader().load ( // Instantiate a loader and load with .load
+    const song = new THREE.Audio(listener);
+
+    new THREE.AudioLoader().load( // Instantiate a loader and load with .load
         audioFile, // songURL
         function (buffer) { // onLoad callback
-        const song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
-        song.play();
-    },
-        function ( xhr ) { // onProgress callback
-        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            song.setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
+            song.play();
+        },
+        function (xhr) { // onProgress callback
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
         }
     )
+
+    const analyser = new THREE.AudioAnalyser(song, 32);
 
     const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
     const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
@@ -53,8 +58,8 @@ function init() {
         return cube;
     }
 
-    const cubeCountX = 10;
-    const cubeCountY = 10;
+    const cubeCountX = 1;
+    const cubeCountY = 1;
     const cubeCountZ = 1;
     cubes = [];
     for (let x = 0; x < cubeCountX; x++) {
@@ -88,21 +93,20 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
+    const data = analyser.getFrequencyData();
+
+    if (!(timestamp % 2)) {
+        console.log(data)
+    }
+
     cubes.forEach((cube, key) => {
 
-        // Wavy, should have X:1.1 Y:1.5 sizing
-        if (time <= 5) {
-            cube.position.y = Math.sin(time * 1) * (0.2 * key);
-        } 
+        cube.scale.y = Math.sin(1 * time) * 5;
+        cube.scale.x = Math.sin(1 * time) * 5;
+        cube.scale.z = Math.sin(1 * time) * 5;
 
-        else if (time > 5 && time < 10) {
-
-        }
-
-        else if (time > 10) {
-
-        }
-
+        cube.rotation.y = time;
+        cube.rotation.x = time;
     });
 
     controls.update();

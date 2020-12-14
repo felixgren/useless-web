@@ -143,3 +143,26 @@ time += 10000
 
 cube.position.x = Math.tan(time * 5) * (0.2 * key);
 cube.position.y = Math.sin(time * 1) * (0.2 * key);
+
+
+// Anim sequence test
+
+if (time <= 2) {
+    cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+    cube.scale.x = Math.sin(time) * 5;
+    cube.scale.z = Math.tan(time * 0.5) * (10);
+    cube.rotation.x = time;
+    cube.rotation.y = time;
+} 
+
+else if (time > 2 && time < 10) {
+    cube.scale.x = Math.sin(time) * 50;
+    cube.rotation.x = Math.sin(time * 0.2);
+    cube.rotation.y = Math.sin(time * 0.2);
+}
+
+else if (time > 10) {
+    cube.position.x = Math.tan(time * 0.005 * key) * 5;
+    cube.rotation.x = Math.sin(time * 0.3);
+    cube.rotation.y = Math.sin(time * 0.3);
+}
