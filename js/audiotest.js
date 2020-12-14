@@ -2,9 +2,8 @@ import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
 const clock = new THREE.Clock();
-const analyser = new THREE.AudioAnalyser();
 
-let cubes, controls, camera, scene, renderer;
+let cubes, controls, camera, scene, renderer, analyser;
 
 init();
 animate();
@@ -43,7 +42,7 @@ function init() {
         }
     )
 
-    const analyser = new THREE.AudioAnalyser(song, 32);
+    analyser = new THREE.AudioAnalyser(song, 32);
 
     const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
     const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
@@ -93,20 +92,29 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    const data = analyser.getFrequencyData();
+    analyser.getFrequencyData();
+    analyser.getAverageFrequency();
+    const data = analyser.getAverageFrequency();
 
-    if (!(timestamp % 2)) {
-        console.log(data)
-    }
+    // console.log(data);
 
     cubes.forEach((cube, key) => {
 
-        cube.scale.y = Math.sin(1 * time) * 5;
-        cube.scale.x = Math.sin(1 * time) * 5;
-        cube.scale.z = Math.sin(1 * time) * 5;
+        // setInterval(() => {
+        //     cube.scale.y = Math.sin(0.001 * data) * 10;
+        // }, 1000);
 
-        cube.rotation.y = time;
-        cube.rotation.x = time;
+        cube.scale.y = Math.sin(0.001 * data) * 10;
+        // cube.scale.x = Math.sin(0.001 * data) * 10;
+        // cube.scale.z = Math.sin(0.001 * data) * 10;
+
+        // cube.scale.y = data * 0.05;
+        
+        // cube.scale.x = Math.sin(1 * time) * 5;
+        // cube.scale.z = Math.sin(1 * time) * 5;
+
+        // cube.rotation.y = time * 0.5;
+        // cube.rotation.x = time * 0.5;
     });
 
     controls.update();
