@@ -5,6 +5,11 @@ const clock = new THREE.Clock();
 
 let cubes, cubesGroup, controls, camera, scene, renderer;
 
+let cubeCountX, cubeCountY, cubeCountZ;
+let cubeSpaceX, cubeSpaceY, cubeSpaceZ;
+
+let geometry, material;
+
 init();
 animate();
 
@@ -30,47 +35,43 @@ function init() {
     const listener = new THREE.AudioListener();
     camera.add(listener); // Add listener to camera
 
-    new THREE.AudioLoader().load ( // Instantiate a loader and load with .load
+    new THREE.AudioLoader().load( // Instantiate a loader and load with .load
         audioFile, // songURL
         function (buffer) { // onLoad callback
-        const song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
-        song.play();
-    },
-        function ( xhr ) { // onProgress callback
-        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            const song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
+            song.play();
+        },
+        function (xhr) { // onProgress callback
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
         }
     )
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
-    const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
-    function makeInstance(geometry, material, x, y, z) {
-        const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
-        scene.add(cube); // Adds the cube, default coords 0,0,0
-        cubesGroup.add(cube);
+    geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
+    material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
+    // function makeInstance(geometry, material, x, y, z) {
+    //     const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
+    //     scene.add(cube); // Adds the cube, default coords 0,0,0
+    //     cubesGroup.add(cube);
 
-        cube.position.x = x;
-        cube.position.y = y;
-        cube.position.z = z;
+    //     cube.position.x = x;
+    //     cube.position.y = y;
+    //     cube.position.z = z;
 
-        return cube;
-    }
+    //     return cube;
+    // }
 
-    const cubeCountX = 5;
-    const cubeCountY = 5;
-    const cubeCountZ = 5;
 
-    cubesGroup = new THREE.Group();
-    cubes = [];
-    for (let x = 0; x < cubeCountX; x++) {
-        for (let y = 0; y < cubeCountY; y++) {
-            for (let z = 0; z < cubeCountZ; z++) {
-                const positionX = (x - ((cubeCountX - 1) / 2)) * 1.5;
-                const positionY = (y - ((cubeCountY - 1) / 2)) * 1.5;
-                const positionZ = (z - ((cubeCountZ - 1) / 2)) * 1.5;
-                cubes.push(makeInstance(geometry, material, positionX, positionY, positionZ))
-            }
-        }
-    }
+    // makeInstance();
+
+    cubeCountX = 5;
+    cubeCountY = 5;
+    cubeCountZ = 5;
+
+    cubeSpaceX = 1.5;
+    cubeSpaceY = 1.5;
+    cubeSpaceZ = 1.5;
+
+    drawCubes();
 
     window.addEventListener('resize', () => {
         const width = window.innerWidth;
@@ -80,9 +81,39 @@ function init() {
         camera.updateProjectionMatrix();
     });
 
-    scene.add(cubesGroup)
+    // scene.add(cubesGroup)
     controls.update();
 
+}
+
+function makeInstance(geometry, material, x, y, z) {
+    const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
+    scene.add(cube); // Adds the cube, default coords 0,0,0
+    // cubesGroup = new THREE.Group();
+    cubesGroup.add(cube);
+
+    cube.position.x = x;
+    cube.position.y = y;
+    cube.position.z = z;
+
+    return cube;
+}
+
+function drawCubes() {
+    cubesGroup = new THREE.Group();
+    cubes = [];
+    for (let x = 0; x < cubeCountX; x++) {
+        for (let y = 0; y < cubeCountY; y++) {
+            for (let z = 0; z < cubeCountZ; z++) {
+                console.log(cubeCountX)
+                const positionX = (x - ((cubeCountX - 1) / 2)) * cubeSpaceX;
+                const positionY = (y - ((cubeCountY - 1) / 2)) * cubeSpaceY;
+                const positionZ = (z - ((cubeCountZ - 1) / 2)) * cubeSpaceZ;
+                cubes.push(makeInstance(geometry, material, positionX, positionY, positionZ))
+            }
+        }
+    }
+    scene.add(cubesGroup)
 }
 
 // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
@@ -95,25 +126,41 @@ function animate(timestamp) {
 
     cubes.forEach((cube, key) => {
 
-        cubesGroup.position.x = Math.sin( time * 0.6 ) * 9;
+        if (time <= 2) {
 
-        // if (time <= 5) {
-            // cube.position.x = Math.sin(time * 2) * (5);
-            // cube.position.x += 0.01;
-            // cube.position.x += Math.tan(time * 0.005) * 2;
-            // cube.position.x -= Math.sin(time * 0.005) * (1);
-        // } 
+            cubesGroup.position.x = Math.sin( time * 0.6 ) * 9;
 
-        // else if (time > 5 && time < 10) {
+            // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+            // cube.scale.x = Math.sin(time) * 5;
+            // cube.scale.z = Math.tan(time * 0.5) * (10);
+            // cube.rotation.x = time;
+            // cube.rotation.y = time;
 
-        // }
+            // cube
+            // cubeCountX = 1;
+            // cubeCountY = 1;
+            // cubeCountZ = 5;
+        }
 
-        // else if (time > 10) {
+        else if (time > 2 && time < 10) {
+            // cube.scale.x = Math.sin(time) * 50;
+            // cube.rotation.x = Math.sin(time * 0.2);
+            // cube.rotation.y = Math.sin(time * 0.2);
+            if (cubeCountX === 5) {
+                // cubesGroup.geometry.dispose()
+                // cubes.splice(0, cubes.length)
+                scene.remove(cubesGroup)
+                cubeCountX = 10;
+                cubeCountY = 10;
+                cubeCountZ = 10;
+                drawCubes();
+                
+            }
+        }
 
-        // }
-
-        // cube.position.x = Math.sin( time * 0.6 ) * 9;
-        // cube.position.x += 2;
+        else if (time > 10) {
+            // cube.position.x = Math.tan(time * 0.005 * key) * 5;
+        }
 
     });
 
