@@ -38,7 +38,7 @@ function init() {
         function ( xhr ) { // onProgress callback
         console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
         }
-    );
+    )
 
     const geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
     const material = new THREE.MeshNormalMaterial(); // Colors cube with RGB

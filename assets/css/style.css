@@ -6,10 +6,11 @@
 :root {
     --public-sans-font: 'Public Sans', sans-serif;
     --roboto-font: 'Roboto', sans-serif;
+    --dev-background: tomato;
 }
 
 body {
-    background: tomato;
+    background: var(--dev-background);
 }
 
 p {
