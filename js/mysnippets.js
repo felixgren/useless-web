@@ -103,3 +103,43 @@ function animate(timestamp) {
 
     renderer.render(scene, camera);
 }
+
+//Loads of animation tests
+
+// Wavy, should have X:1.1 Y:1.5 sizing
+cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+cube.scale.x = Math.sin(time) * 5;
+cube.scale.z = Math.tan(time * 0.5) * (10);
+cube.rotation.x = time;
+cube.rotation.y = time;
+
+cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+cube.position.y = Math.tan(time * 1) * 1;
+cube.scale.z = Math.tan(time * 0.5) * (10);
+
+cube.scale.x = Math.sin(time) * 50;
+cube.rotation.x = Math.sin(time * 0.2);
+cube.rotation.y = Math.sin(time * 0.2);
+
+cube.position.x = Math.tan(time * 1) * 5;
+
+cube.position.x = Math.tan(time * 0.005 * key) * 5;
+cube.rotation.x = Math.sin(time * 0.3);
+cube.rotation.y = Math.sin(time * 0.3);
+time += 10000
+
+cube.position.x = Math.tan(time * 0.005 * key) * 5;
+cube.position.y = Math.tan(time * 0.005 * key) * 5;
+cube.position.z = Math.tan(time * 0.009) * 5;
+cube.scale.x = Math.sin(time * 0.001 * key) * 10;
+cube.position.x = (time += 10000);
+
+cube.scale.y = Math.cos(time * 0.05 * key) * 5;
+cube.rotation.x = Math.sin(time * 1);
+cube.rotation.y = Math.sin(time * 1);
+cube.rotation.z = Math.sin(time * 1);
+
+time += 10000
+
+cube.position.x = Math.tan(time * 5) * (0.2 * key);
+cube.position.y = Math.sin(time * 1) * (0.2 * key);
