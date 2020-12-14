@@ -104,6 +104,12 @@ function animate(timestamp) {
     renderer.render(scene, camera);
 }
 
+
+// Circle anim
+cube.position.x = Math.sin( time * 0.6 ) * 9;
+cube.position.y = Math.cos( time * 0.6 ) * 9;
+
+
 //Loads of animation tests
 
 // Wavy, should have X:1.1 Y:1.5 sizing

@@ -2,6 +2,7 @@ import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
 const clock = new THREE.Clock();
+let testGroup = new THREE.Object3D();
 
 let cubes, controls, camera, scene, renderer;
 
@@ -78,6 +79,15 @@ function init() {
 
     controls.update();
 
+    // let testGroup = new THREE.Object3D();
+    // testGroup.add(cubes);
+
+    cubes.forEach(cube => {
+        // cube.position.x += 0;
+        testGroup.add(cube);
+    });
+    scene.add(testGroup)
+
 }
 
 // Render loop, draws scene at screen refresh rate. Uses requestAnimationFrame instead of SetInterval. Everything inside runs every refresh.
@@ -89,6 +99,13 @@ function animate(timestamp) {
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
     cubes.forEach((cube, key) => {
+
+
+        // testGroup.position.x = 5;
+
+        // cube.position.x = Math.sin( time * 0.6 ) * 9;
+
+        testGroup.position.x = Math.sin( time * 0.6 ) * 9;
 
         // if (time <= 5) {
             // cube.position.x = Math.sin(time * 2) * (5);
