@@ -172,3 +172,17 @@ else if (time > 10) {
     cube.rotation.x = Math.sin(time * 0.3);
     cube.rotation.y = Math.sin(time * 0.3);
 }
+
+
+// Grouping
+let testGroup = new THREE.Object3D(); //top
+
+cubes.forEach(cube => { // in init
+    // cube.position.x += 0;
+    testGroup.add(cube);
+});
+scene.add(testGroup)
+
+//in render cube forloop
+testGroup.position.x = Math.sin( time * 0.6 ) * 9;
+

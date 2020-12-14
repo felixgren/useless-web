@@ -2,14 +2,14 @@ import * as THREE from 'https://unpkg.com/three@0.123.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/controls/OrbitControls.js';
 
 const clock = new THREE.Clock();
-let testGroup = new THREE.Object3D();
 
-let cubes, controls, camera, scene, renderer;
+let cubes, cubesGroup, controls, camera, scene, renderer;
 
 init();
 animate();
 
 function init() {
+
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
 
@@ -46,6 +46,7 @@ function init() {
     function makeInstance(geometry, material, x, y, z) {
         const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
         scene.add(cube); // Adds the cube, default coords 0,0,0
+        cubesGroup.add(cube);
 
         cube.position.x = x;
         cube.position.y = y;
@@ -56,14 +57,16 @@ function init() {
 
     const cubeCountX = 5;
     const cubeCountY = 5;
-    const cubeCountZ = 1;
+    const cubeCountZ = 5;
+
+    cubesGroup = new THREE.Group();
     cubes = [];
     for (let x = 0; x < cubeCountX; x++) {
         for (let y = 0; y < cubeCountY; y++) {
             for (let z = 0; z < cubeCountZ; z++) {
-                const positionX = (x - ((cubeCountX - 1) / 2)) * 1.1;
-                const positionY = (y - ((cubeCountY - 1) / 2)) * 1.1;
-                const positionZ = (z - ((cubeCountZ - 1) / 2)) * 1.1;
+                const positionX = (x - ((cubeCountX - 1) / 2)) * 1.5;
+                const positionY = (y - ((cubeCountY - 1) / 2)) * 1.5;
+                const positionZ = (z - ((cubeCountZ - 1) / 2)) * 1.5;
                 cubes.push(makeInstance(geometry, material, positionX, positionY, positionZ))
             }
         }
@@ -77,16 +80,8 @@ function init() {
         camera.updateProjectionMatrix();
     });
 
+    scene.add(cubesGroup)
     controls.update();
-
-    // let testGroup = new THREE.Object3D();
-    // testGroup.add(cubes);
-
-    cubes.forEach(cube => {
-        // cube.position.x += 0;
-        testGroup.add(cube);
-    });
-    scene.add(testGroup)
 
 }
 
@@ -100,12 +95,7 @@ function animate(timestamp) {
 
     cubes.forEach((cube, key) => {
 
-
-        // testGroup.position.x = 5;
-
-        // cube.position.x = Math.sin( time * 0.6 ) * 9;
-
-        testGroup.position.x = Math.sin( time * 0.6 ) * 9;
+        cubesGroup.position.x = Math.sin( time * 0.6 ) * 9;
 
         // if (time <= 5) {
             // cube.position.x = Math.sin(time * 2) * (5);
