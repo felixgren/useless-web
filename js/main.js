@@ -76,11 +76,11 @@ function animate(timestamp) {
     cubes.forEach((cube, key) => {
 
         // Wavy, should have X:1.1 Y:1.5 sizing
-        // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
-        // cube.scale.x = Math.sin(time) * 5;
-        // cube.scale.z = Math.tan(time * 0.5) * (10);
-        // cube.rotation.x = time;
-        // cube.rotation.y = time;
+        cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+        cube.scale.x = Math.sin(time) * 5;
+        cube.scale.z = Math.tan(time * 0.5) * (10);
+        cube.rotation.x = time;
+        cube.rotation.y = time;
 
         // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
         // cube.position.y = Math.tan(time * 1) * 1;
