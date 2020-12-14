@@ -6,7 +6,7 @@ const clock = new THREE.Clock();
 let cubes, cubesGroup, controls, camera, scene, renderer;
 
 let cubeCountX, cubeCountY, cubeCountZ;
-let cubeSpaceX, cubeSpaceY, cubeSpaceZ;
+let cubeSpacingX, cubeSpacingY, cubeSpacingZ;
 
 let geometry, material;
 
@@ -48,28 +48,9 @@ function init() {
 
     geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
     material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
-    // function makeInstance(geometry, material, x, y, z) {
-    //     const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
-    //     scene.add(cube); // Adds the cube, default coords 0,0,0
-    //     cubesGroup.add(cube);
 
-    //     cube.position.x = x;
-    //     cube.position.y = y;
-    //     cube.position.z = z;
-
-    //     return cube;
-    // }
-
-
-    // makeInstance();
-
-    cubeCountX = 5;
-    cubeCountY = 5;
-    cubeCountZ = 5;
-
-    cubeSpaceX = 1.5;
-    cubeSpaceY = 1.5;
-    cubeSpaceZ = 1.5;
+    cubeCountX = 5, cubeCountY = 5, cubeCountZ = 5;
+    cubeSpacingX = 1.5, cubeSpacingY = 1.5, cubeSpacingZ = 1.5;
 
     drawCubes();
 
@@ -81,7 +62,6 @@ function init() {
         camera.updateProjectionMatrix();
     });
 
-    // scene.add(cubesGroup)
     controls.update();
 
 }
@@ -89,7 +69,6 @@ function init() {
 function makeInstance(geometry, material, x, y, z) {
     const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
     scene.add(cube); // Adds the cube, default coords 0,0,0
-    // cubesGroup = new THREE.Group();
     cubesGroup.add(cube);
 
     cube.position.x = x;
@@ -106,9 +85,9 @@ function drawCubes() {
         for (let y = 0; y < cubeCountY; y++) {
             for (let z = 0; z < cubeCountZ; z++) {
                 console.log(cubeCountX)
-                const positionX = (x - ((cubeCountX - 1) / 2)) * cubeSpaceX;
-                const positionY = (y - ((cubeCountY - 1) / 2)) * cubeSpaceY;
-                const positionZ = (z - ((cubeCountZ - 1) / 2)) * cubeSpaceZ;
+                const positionX = (x - ((cubeCountX - 1) / 2)) * cubeSpacingX;
+                const positionY = (y - ((cubeCountY - 1) / 2)) * cubeSpacingY;
+                const positionZ = (z - ((cubeCountZ - 1) / 2)) * cubeSpacingZ;
                 cubes.push(makeInstance(geometry, material, positionX, positionY, positionZ))
             }
         }
@@ -126,40 +105,32 @@ function animate(timestamp) {
 
     cubes.forEach((cube, key) => {
 
+        // cubesGroup.position.x = Math.sin(time * 5) * 10;
+
         if (time <= 2) {
-
-            cubesGroup.position.x = Math.sin( time * 0.6 ) * 9;
-
-            // cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
-            // cube.scale.x = Math.sin(time) * 5;
-            // cube.scale.z = Math.tan(time * 0.5) * (10);
-            // cube.rotation.x = time;
-            // cube.rotation.y = time;
-
-            // cube
-            // cubeCountX = 1;
-            // cubeCountY = 1;
-            // cubeCountZ = 5;
+            cubesGroup.position.x = Math.sin(time * 5) * 10;
         }
 
         else if (time > 2 && time < 10) {
-            // cube.scale.x = Math.sin(time) * 50;
-            // cube.rotation.x = Math.sin(time * 0.2);
-            // cube.rotation.y = Math.sin(time * 0.2);
+
             if (cubeCountX === 5) {
-                // cubesGroup.geometry.dispose()
-                // cubes.splice(0, cubes.length)
                 scene.remove(cubesGroup)
-                cubeCountX = 10;
-                cubeCountY = 10;
-                cubeCountZ = 10;
+                cubeCountX = 3, cubeCountY = 3, cubeCountZ = 3;
+                cubeSpacingX = 1.1, cubeSpacingY = 1.1, cubeSpacingZ = 1.1;
                 drawCubes();
-                
             }
+            cubesGroup.position.y = Math.sin(time * 5) * 9;
         }
 
         else if (time > 10) {
-            // cube.position.x = Math.tan(time * 0.005 * key) * 5;
+
+            if (cubeCountX === 3) {
+                scene.remove(cubesGroup)
+                cubeCountX = 7, cubeCountY = 7, cubeCountZ = 7;
+                cubeSpacingX = 2, cubeSpacingY = 2, cubeSpacingZ = 2;
+                drawCubes();
+            }
+            cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
         }
 
     });
