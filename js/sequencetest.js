@@ -3,7 +3,7 @@ import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/cont
 
 const clock = new THREE.Clock();
 
-let cubes, cubesGroup, controls, camera, scene, renderer;
+let cubes, cubesGroup, cube, controls, camera, scene, renderer;
 
 let cubeCount = { x: 5, y: 5, z: 5 };
 let cubeSpacing = { x: 1.5, y: 1.5, z: 1.5 };
@@ -64,7 +64,7 @@ function init() {
 }
 
 function makeInstance(geometry, material, x, y, z) {
-    const cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
+    cube = new THREE.Mesh(geometry, material); // Cube mesh. Mesh object takes geometry and applies a material.
     scene.add(cube); // Adds the cube, default coords 0,0,0
     cubesGroup.add(cube);
 
@@ -101,12 +101,14 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    time += 28;
+    time += 57;
 
     cubes.forEach((cube, key) => {
 
         // cubesGroup.position.x = Math.sin(time * 5) * 10;
 
+
+        // FIRST
         if (time <= 15) {
             // cubesGroup.position.x = Math.sin(time * 5) * 10;
 
@@ -117,6 +119,7 @@ function animate(timestamp) {
             cube.rotation.y = time;
         }
 
+        // SECOND
         else if (time > 15 && time < 30) {
 
             if (cubeCount.x === 5) {
@@ -129,12 +132,77 @@ function animate(timestamp) {
             cube.scale.x = Math.sin(time) * 50;
             cube.rotation.x = Math.sin(time * 0.2);
             cube.rotation.y = Math.sin(time * 0.2);
-            cube.rotation.z = Math.tan(time * 0.002);
+            // cube.rotation.z = Math.tan(time * 0.002);
         }
 
-        else if (time > 30) {
+        // THIRD
+        else if (time > 30 && time < 45) {
 
             if (cubeCount.x === 10) {
+                scene.remove(cubesGroup)
+                Object.assign(cubeCount, { x: 7, y: 7, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
+                drawCubes();
+            }
+            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
+            cube.position.x = Math.tan(time * 0.005 * key) * 5;
+            cube.rotation.x = Math.sin(time * 0.3);
+            cube.rotation.y = Math.sin(time * 0.3);
+            // cube.position.y = key + 2;
+        }
+
+        // FORTH
+        else if (time > 45 && time < 60) {
+
+            if (cubeSpacing.x === 1.5) {
+                scene.remove(cubesGroup)
+                Object.assign(cubeCount, { x: 20, y: 20, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.1, y: 1.1, z: 1.1 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
+                drawCubes();
+            }
+            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
+
+            // cube.position.z = Math.sin((time * 10) + Math.sqrt())
+            let currentX = cube.position.x
+            let currentY = cube.position.y
+
+            cube.position.z = Math.sin((time * 3) + Math.sqrt(currentX * currentX + currentY * currentY))
+            cube.rotation.x = time;
+            // cube.rotation.y = Math.sin(time * 0.02) * 0.5;
+            cubesGroup.rotation.y = Math.sin(time * 0.5) * 0.2;
+
+            if (time > 50) { // Can be used for outro effect
+            }
+        }
+
+        // FIFTH
+        else if (time > 60 && time < 75) {
+
+            if (cubeSpacing.x === 1.1) {
+                scene.remove(cubesGroup)
+                Object.assign(cubeCount, { x: 20, y: 20, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.2, y: 1.2, z: 1.2 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
+                drawCubes();
+            }
+            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
+
+            // cube.position.z = Math.sin((time * 10) + Math.sqrt())
+            let currentX = cube.position.x
+            let currentY = cube.position.y
+            let currentZ = cube.position.z
+            // console.log(currentX)
+            cube.position.z = Math.tan((time * 0.1) + Math.sqrt(currentX * currentX + currentY * currentY))
+            cube.rotation.x = time;
+            // cube.rotation.y = Math.sin(time * 0.02) * 0.5;
+        }
+
+        // LASTT ANIMATION 
+        else if (time > 90 && time < 105) { // Default for new anim
+
+            if (cubeCount.x === 20) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 7, y: 7, z: 7 })
                 Object.assign(cubeSpacing, { x: 2, y: 2, z: 2 })
