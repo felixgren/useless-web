@@ -32,7 +32,7 @@ function init() {
     controls.minDistance = 3;
     controls.maxDistance = 100;
 
-    const audioFile = '/assets/audio/bambooshort.mp3';
+    const audioFile = '/assets/audio/bambooShort.mp3';
     const listener = new THREE.AudioListener();
     camera.add(listener); // Add listener to camera
 
