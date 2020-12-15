@@ -9,8 +9,6 @@ let cubeCount = { x: 5, y: 5, z: 5 };
 let cubeSpacing = { x: 1.5, y: 1.5, z: 1.5 };
 let cubeSize = { x: 1, y: 1, z: 1 };
 
-
-
 let geometry, material;
 
 init();
@@ -34,7 +32,7 @@ function init() {
     controls.minDistance = 3;
     controls.maxDistance = 100;
 
-    const audioFile = '/assets/audio/bamboo.mp3';
+    const audioFile = '/assets/audio/bambooshort.mp3';
     const listener = new THREE.AudioListener();
     camera.add(listener); // Add listener to camera
 
@@ -101,7 +99,7 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    // time += 74;
+    // time += 0;
 
     cubes.forEach((cube, key) => {
         // FIRST - WAVEY
@@ -121,7 +119,7 @@ function animate(timestamp) {
         }
 
         // SECOND - BIG CUBE
-        else if (time > 15 && time < 30) {
+        else if (time > 15 && time < 25) {
 
             if (cubeCount.y === 20) {
                 scene.remove(cubesGroup)
@@ -136,7 +134,7 @@ function animate(timestamp) {
         }
 
         // THIRD - FLOATING (needs work)
-        else if (time > 30 && time < 45) {
+        else if (time > 25 && time < 40) {
 
             if (cubeCount.x === 10) {
                 scene.remove(cubesGroup)
@@ -150,10 +148,11 @@ function animate(timestamp) {
             
             cube.rotation.x = Math.sin(time * 0.3) + key;
             cube.rotation.y = Math.sin(time * 0.3);
+
         }
 
         // FORTH - SQUARE PATTERN
-        else if (time > 45 && time < 60) {
+        else if (time > 40 && time < 53) {
 
             if (cubeSpacing.x === 4) {
                 scene.remove(cubesGroup)
@@ -162,6 +161,7 @@ function animate(timestamp) {
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
+
             let currentX = cube.position.x
             let currentY = cube.position.y
 
@@ -178,7 +178,7 @@ function animate(timestamp) {
         }
 
         // FIFTH - SQUARE PATTERN PT.2
-        else if (time > 60 && time < 75) {
+        else if (time > 53 && time < 70) {
 
             if (cubeSpacing.x === 1.1) {
                 scene.remove(cubesGroup)
@@ -190,25 +190,24 @@ function animate(timestamp) {
 
             let currentX = cube.position.x
             let currentY = cube.position.y
-            let currentZ = cube.position.z
             cube.position.z = Math.tan((time * 0.1) + Math.sqrt(currentX * currentX + currentY * currentY))
             cube.rotation.x = time;
         }
 
         // SIXTH - SQUARE EXPERIMENTAL
-        else if (time > 75 && time < 90) {
+        else if (time > 70 && time < 80) {
 
-            if (cubeCount.x === 5) {
+            if (cubeSpacing.x === 1.2 ) {
                 scene.remove(cubesGroup)
-                Object.assign(cubeCount, { x: 20, y: 20, z: 1 })
-                Object.assign(cubeSpacing, { x: 1.2, y: 1.2, z: 1.2 })
+                Object.assign(cubeCount, { x: 23, y: 23, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.3, y: 1.3, z: 1.3 })
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
 
             let currentX = cube.position.x
             let currentY = cube.position.y
-            let currentZ = cube.position.z
+            // let currentZ = cube.position.z
 
             //BASE
             cube.position.z = Math.tan((time * 0.1) + Math.sqrt(currentX * currentX + currentY * currentY))
@@ -228,9 +227,9 @@ function animate(timestamp) {
         }
 
         // SEVENTH - LINE
-        else if (time > 90 && time < 180) {
+        else if (time > 80 && time < 122) {
 
-            if (cubeSpacing.x === 1.2) {
+            if (cubeSpacing.x === 1.3) {
                 const cubeGenerator = Math.round(window.innerWidth / 60 + 2); // To cover screen. Each cube around 60px
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: cubeGenerator, y: 1, z: 1 })
@@ -245,7 +244,7 @@ function animate(timestamp) {
             cube.position.y = Math.sin(timestamp * (key * 0.05) / 300 + key / 6);
             cube.scale.y = Math.sin(20 + key) + key * 2;
 
-            if (time > 100) {
+            if (time > 86) {
                 cube.scale.y = 1;
                 if (cube.scale.x >= 2000) {
                     cube.scale.x = 2000;
@@ -254,7 +253,7 @@ function animate(timestamp) {
                 }
             }
 
-            if (time > 115) {
+            if (time > 110) {
                 cube.rotation.x += 0.003;
                 cube.rotation.y += 0.003;
                 cube.rotation.z += 0.003;
@@ -262,7 +261,7 @@ function animate(timestamp) {
         }
 
         // LAST ANIMATION 
-        else if (time > 180 && time < 200) { // Default for new anim
+        else if (time > 122 && time < 200) { // Default for new anim
 
             if (cubeSize.x === 0.2) {
                 scene.remove(cubesGroup)
