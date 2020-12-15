@@ -112,23 +112,23 @@ function animate(timestamp) {
         }
 
         // const rotation = 0.02 + key * 0.00008;
-        // cube.rotation.x += key * delta * 0.001; // First 1
+        cube.rotation.x += key * delta * 0.001; // First 1
         // cube.rotation.x += rotation * delta; // First 2
 
         // cube.rotation.x = time * 0.5
-        // cube.rotation.x = (time) + (key * 3.3);
+        cube.rotation.x = (time) + (key * 3.3);
         
-        // cube.scale.z = Math.sin((time * 1))
+        cube.scale.z = Math.sin((time * 1))
 
-        // cube.rotation.x += (0.002 + key * 0.0000008) * delta; // Original, desync..
+        cube.rotation.x += (0.002 + key * 0.0000008) * delta; // Original, desync..
 
 
-        // cube.rotation.y += 0.02 * delta;
+        cube.rotation.y += 0.02 * delta;
         // cube.rotation.y = time * 0.5;
 
-        // cube.scale.y = Math.sin(20 + key) + key * 2; // Small from large length
+        cube.scale.y = Math.sin(20 + key) + key * 2; // Small from large length
 
-        // cube.position.y = Math.sin(timestamp * (key * 0.05) / 300 + key / 6); // Original
+        cube.position.y = Math.sin(timestamp * (key * 0.05) / 300 + key / 6); // Original
         // cube.position.y = Math.sin(time * (key) + key / 6); // SUPA FAST
         // cube.position.y = Math.sin((time * 3) + (key * 100)); //Fav?
         // cube.position.y = Math.sin((time * 4) + (key * 0.2));
@@ -136,13 +136,13 @@ function animate(timestamp) {
 
 
         if (time > 8) {
-            // cube.scale.y = 1;
+            cube.scale.y = 1;
             
-            // if (cube.scale.x >= 2000) {
-            //     cube.scale.x = 2000;
-            // } else {
-            //     cube.scale.x += 5;
-            // }
+            if (cube.scale.x >= 2000) {
+                cube.scale.x = 2000;
+            } else {
+                cube.scale.x += 5;
+            }
 
         }
 
