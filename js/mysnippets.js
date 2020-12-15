@@ -186,3 +186,38 @@ scene.add(testGroup)
 //in render cube forloop
 testGroup.position.x = Math.sin( time * 0.6 ) * 9;
 
+
+// Ways to get object property, any difference?
+console.log(cubeCount["x"]);
+console.log(cubeCount.x);
+let cubeCount = { x: 5, y: 5, z: 5 };
+Object.assign(cubeCount, { x: 10, y: 10, z: 10 })
+console.log(Object.values(cubeCount));
+
+
+// Base sequence anim
+if (time <= 2) {
+    cubesGroup.position.x = Math.sin(time * 5) * 10;
+}
+
+else if (time > 2 && time < 10) {
+
+    if (cubeCount.x === 5) {
+        scene.remove(cubesGroup)
+        Object.assign(cubeCount, { x: 3, y: 3, z: 3 })
+        Object.assign(cubeSpacing, { x: 1.1, y: 1.1, z: 1.1 })
+        drawCubes();
+    }
+    cubesGroup.position.y = Math.sin(time * 5) * 9;
+}
+
+else if (time > 10) {
+
+    if (cubeCount.x === 3) {
+        scene.remove(cubesGroup)
+        Object.assign(cubeCount, { x: 7, y: 7, z: 7 })
+        Object.assign(cubeSpacing, { x: 2, y: 2, z: 2 })
+        drawCubes();
+    }
+    cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
+}
