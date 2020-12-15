@@ -2,13 +2,25 @@
 
 # The Useless Web
 
-WIP...
-<strong>LIVE: https://useless-web.vercel.app/</strong>
+<strong>WIP LIVE: https://useless-web.vercel.app/</strong>
 
 Project to create a useless website!
 
+### Todo
+
+- [ ] System to ensure time sync between music & anims
+- [ ] Start menu 
+  - [ ] User gesture required for AudioContext in Chrome
+  - [ ] Load indication/progress bar
+ - [ ] Optimize for smaller screens
+   - [ ] Optimize render settings
+   - [ ] Look over mobile support
+   - [ ] Mobile DeviceOrientationControls possibility
+ - [ ] Volume control
+ - [ ] Revise animations
+   - [ ] Anim polish/additions
+   - [ ] Precise timing
+
 ### Testers
-
-##### Jonathan
-
-##### Dante
+- Jonathan
+- Dante
