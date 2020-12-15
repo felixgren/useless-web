@@ -104,13 +104,8 @@ function animate(timestamp) {
     // time += 74;
 
     cubes.forEach((cube, key) => {
-
-        // cubesGroup.position.x = Math.sin(time * 5) * 10;
-
-
         // FIRST - WAVEY
         if (time <= 15) {
-            // cubesGroup.position.x = Math.sin(time * 5) * 10;
             if (cubeCount.x === 5) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 10, y: 20, z: 1 })
@@ -138,7 +133,6 @@ function animate(timestamp) {
             cube.scale.x = Math.sin(time)/2 * 20;
             cube.rotation.x = Math.sin(time * 0.2);
             cube.rotation.y = Math.sin(time * 0.2);
-            // cube.rotation.z = Math.tan(time * 0.002);
         }
 
         // THIRD - FLOATING (needs work)
@@ -156,8 +150,6 @@ function animate(timestamp) {
             
             cube.rotation.x = Math.sin(time * 0.3) + key;
             cube.rotation.y = Math.sin(time * 0.3);
-
-            // cube.position.y = key + 2;
         }
 
         // FORTH - SQUARE PATTERN
@@ -170,15 +162,11 @@ function animate(timestamp) {
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
-            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
-
-            // cube.position.z = Math.sin((time * 10) + Math.sqrt())
             let currentX = cube.position.x
             let currentY = cube.position.y
 
             cube.position.z = Math.sin((time * 3) + Math.sqrt(currentX * currentX + currentY * currentY))
             cube.rotation.x = time * 1.3;
-            // cube.rotation.y = Math.sin(time * 0.02) * 0.5;
 
             cubesGroup.rotation.y = Math.sin(time * 0.5) * 0.2;
             
@@ -199,16 +187,12 @@ function animate(timestamp) {
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
-            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
 
-            // cube.position.z = Math.sin((time * 10) + Math.sqrt())
             let currentX = cube.position.x
             let currentY = cube.position.y
             let currentZ = cube.position.z
-            // console.log(currentX)
             cube.position.z = Math.tan((time * 0.1) + Math.sqrt(currentX * currentX + currentY * currentY))
             cube.rotation.x = time;
-            // cube.rotation.y = Math.sin(time * 0.02) * 0.5;
         }
 
         // SIXTH - SQUARE EXPERIMENTAL
@@ -222,9 +206,6 @@ function animate(timestamp) {
                 drawCubes();
             }
 
-            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
-
-            // cube.position.z = Math.sin((time * 10) + Math.sqrt())
             let currentX = cube.position.x
             let currentY = cube.position.y
             let currentZ = cube.position.z
