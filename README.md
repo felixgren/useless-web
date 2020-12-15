@@ -2,6 +2,13 @@
 
 # The Useless Web
 
+WIP...
 <strong>LIVE: https://useless-web.vercel.app/</strong>
 
 Project to create a useless website!
+
+### Testers
+
+##### Jonathan
+
+##### Dante
