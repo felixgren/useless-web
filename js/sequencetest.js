@@ -6,7 +6,10 @@ const clock = new THREE.Clock();
 let cubes, cubesGroup, controls, camera, scene, renderer;
 
 let cubeCount = { x: 5, y: 5, z: 5 };
-let cubeSpacing = { x: 1.5, y: 1.5, z: 1.5 }; 
+let cubeSpacing = { x: 1.5, y: 1.5, z: 1.5 };
+let cubeSize = { x: 1, y: 1, z: 1 };
+
+
 
 let geometry, material;
 
@@ -46,9 +49,6 @@ function init() {
         }
     )
 
-    geometry = new THREE.BoxGeometry(1, 1, 1); // Contains all vertices & faces (points & fill) for cube
-    material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
-
     drawCubes();
 
     window.addEventListener('resize', () => {
@@ -76,6 +76,8 @@ function makeInstance(geometry, material, x, y, z) {
 }
 
 function drawCubes() {
+    material = new THREE.MeshNormalMaterial(); // Colors cube with RGB
+    geometry = new THREE.BoxGeometry(cubeSize.x, cubeSize.y, cubeSize.z); // Contains all vertices & faces (points & fill) for cube.
     cubesGroup = new THREE.Group();
     cubes = [];
     for (let x = 0; x < cubeCount.x; x++) {
@@ -99,31 +101,44 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
+    time += 28;
+
     cubes.forEach((cube, key) => {
 
         // cubesGroup.position.x = Math.sin(time * 5) * 10;
 
-        if (time <= 5) {
-            cubesGroup.position.x = Math.sin(time * 5) * 10;
+        if (time <= 15) {
+            // cubesGroup.position.x = Math.sin(time * 5) * 10;
+
+            cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
+            cube.scale.x = Math.sin(time) * 5;
+            cube.scale.z = Math.tan(time * 0.5) * (10);
+            cube.rotation.x = time;
+            cube.rotation.y = time;
         }
 
-        else if (time > 5 && time < 10) {
+        else if (time > 15 && time < 30) {
 
             if (cubeCount.x === 5) {
                 scene.remove(cubesGroup)
-                Object.assign(cubeCount, { x: 3, y: 3, z: 3 })
-                Object.assign(cubeSpacing, { x: 1.1, y: 1.1, z: 1.1 })
+                Object.assign(cubeCount, { x: 10, y: 10, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
-            cubesGroup.position.y = Math.sin(time * 5) * 9;
+            cube.scale.x = Math.sin(time) * 50;
+            cube.rotation.x = Math.sin(time * 0.2);
+            cube.rotation.y = Math.sin(time * 0.2);
+            cube.rotation.z = Math.tan(time * 0.002);
         }
 
-        else if (time > 10) {
+        else if (time > 30) {
 
-            if (cubeCount.x === 3) {
+            if (cubeCount.x === 10) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 7, y: 7, z: 7 })
                 Object.assign(cubeSpacing, { x: 2, y: 2, z: 2 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
             cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
