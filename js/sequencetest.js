@@ -101,7 +101,7 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    time += 89;
+    time += 44;
 
     cubes.forEach((cube, key) => {
 
@@ -141,14 +141,16 @@ function animate(timestamp) {
             if (cubeCount.x === 10) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 7, y: 7, z: 1 })
-                Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
+                Object.assign(cubeSpacing, { x: 4, y: 4, z: 90 })
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
-            // cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
-            cube.position.x = Math.tan(time * 0.005 * key) * 5;
-            cube.rotation.x = Math.sin(time * 0.3);
+            cube.position.x = (Math.tan(time * 0.005 * key) * 5 + key) - key/2;
+            cube.position.z = Math.sin((time * 0.005) + key * 3) * 5;
+            
+            cube.rotation.x = Math.sin(time * 0.3) + key;
             cube.rotation.y = Math.sin(time * 0.3);
+
             // cube.position.y = key + 2;
         }
 
@@ -169,9 +171,13 @@ function animate(timestamp) {
             let currentY = cube.position.y
 
             cube.position.z = Math.sin((time * 3) + Math.sqrt(currentX * currentX + currentY * currentY))
-            cube.rotation.x = time;
+            cube.rotation.x = time * 1.3;
             // cube.rotation.y = Math.sin(time * 0.02) * 0.5;
+
             cubesGroup.rotation.y = Math.sin(time * 0.5) * 0.2;
+            
+            cubesGroup.scale.y = Math.sin(time * 0.2) * 0.8;
+            cubesGroup.scale.x = Math.sin(time * 0.2) * 0.8;
 
             if (time > 50) { // Can be used for outro effect
             }
