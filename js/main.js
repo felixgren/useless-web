@@ -34,7 +34,7 @@ function init() {
     controls.minDistance = 3;
     controls.maxDistance = 100;
 
-    const audioFile = '/assets/audio/lordechojustdoyou.mp3';
+    const audioFile = '/assets/audio/bamboo.mp3';
     const listener = new THREE.AudioListener();
     camera.add(listener); // Add listener to camera
 
@@ -101,7 +101,7 @@ function animate(timestamp) {
     const delta = clock.getDelta() * 60;
     let time = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    // time += 44;
+    // time += 74;
 
     cubes.forEach((cube, key) => {
 
@@ -111,7 +111,13 @@ function animate(timestamp) {
         // FIRST - WAVEY
         if (time <= 15) {
             // cubesGroup.position.x = Math.sin(time * 5) * 10;
-
+            if (cubeCount.x === 5) {
+                scene.remove(cubesGroup)
+                Object.assign(cubeCount, { x: 10, y: 20, z: 1 })
+                Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
+                Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
+                drawCubes();
+            }
             cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
             cube.scale.x = Math.sin(time) * 5;
             cube.scale.z = Math.tan(time * 0.5) * (10);
@@ -122,14 +128,14 @@ function animate(timestamp) {
         // SECOND - BIG CUBE
         else if (time > 15 && time < 30) {
 
-            if (cubeCount.x === 5) {
+            if (cubeCount.y === 20) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 10, y: 10, z: 1 })
                 Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
                 Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                 drawCubes();
             }
-            cube.scale.x = Math.sin(time) * 50;
+            cube.scale.x = Math.sin(time)/2 * 20;
             cube.rotation.x = Math.sin(time * 0.2);
             cube.rotation.y = Math.sin(time * 0.2);
             // cube.rotation.z = Math.tan(time * 0.002);
@@ -157,7 +163,7 @@ function animate(timestamp) {
         // FORTH - SQUARE PATTERN
         else if (time > 45 && time < 60) {
 
-            if (cubeSpacing.x === 1.5) {
+            if (cubeSpacing.x === 4) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 20, y: 20, z: 1 })
                 Object.assign(cubeSpacing, { x: 1.1, y: 1.1, z: 1.1 })
@@ -277,7 +283,7 @@ function animate(timestamp) {
         // LAST ANIMATION 
         else if (time > 180 && time < 200) { // Default for new anim
 
-            if (cubeCount.x === 20) {
+            if (cubeSize.x === 0.2) {
                 scene.remove(cubesGroup)
                 Object.assign(cubeCount, { x: 7, y: 7, z: 7 })
                 Object.assign(cubeSpacing, { x: 2, y: 2, z: 2 })
