@@ -8,7 +8,7 @@ Project to create a useless website!
 
 ### Todo
 
-- [ ] System to ensure time sync between music & anims
+- [x] System to ensure time sync between music & anims
 - [ ] Start menu 
   - [ ] User gesture required for AudioContext in Chrome
   - [ ] Load indication/progress bar
