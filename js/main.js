@@ -5,15 +5,22 @@ const clock = new THREE.Clock();
 
 let cubes, cubesGroup, cube, controls, camera, scene, renderer;
 
+let geometry, material;
+
 let cubeCount = { x: 5, y: 5, z: 5 };
 let cubeSpacing = { x: 1.5, y: 1.5, z: 1.5 };
 let cubeSize = { x: 1, y: 1, z: 1 };
 
-let geometry, material;
-
 let ready = false;
+let clicked = false;
+let timeToStart;
 
-let timeToLoad;
+const overlay = document.querySelector(".overlay");
+const startButton = document.querySelector("#start-button");
+startButton.addEventListener('click', function () {
+    overlay.remove();
+    clicked = true;
+});
 
 init();
 animate();
@@ -114,15 +121,21 @@ function animate(timestamp) {
     pTag.innerHTML = `Time origin: ${timeOrigin}`;
 
     if (ready) {
+        startButton.innerHTML = "Start!"
+        startButton.style.border = "1px solid white";
+        startButton.style.pointerEvents = "auto";
+    }
 
-        if (timeToLoad === undefined) {
-            console.log(`hello! time to load: ${timeOrigin}`);
-            return timeToLoad = timeOrigin;
+    if (ready && clicked) {
+
+        if (timeToStart === undefined) {
+            console.log(`hello! time to start: ${timeOrigin}`);
+            return timeToStart = timeOrigin;
         }
 
-        const time = timeOrigin - timeToLoad; // Time used for timing & animations
+        const time = timeOrigin - timeToStart; // Time used for timing & animations
 
-        pTag2.innerHTML = `Time loaded: ${time}`;
+        pTag2.innerHTML = `Time start: ${time}`;
 
         cubes.forEach((cube, key) => {
             // FIRST - WAVEY
