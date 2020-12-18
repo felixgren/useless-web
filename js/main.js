@@ -15,11 +15,14 @@ let ready = false;
 let clicked = false;
 let timeToStart;
 
+let song;
+
 const overlay = document.querySelector(".overlay");
 const startButton = document.querySelector("#start-button");
 startButton.addEventListener('click', function () {
     overlay.remove();
     clicked = true;
+    song.play();
 });
 
 init();
@@ -50,9 +53,8 @@ function init() {
     new THREE.AudioLoader().load( // Instantiate a loader and load with .load
         audioFile, // songURL
         function (buffer) { // onLoad callback
-            const song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
-
-            song.play();
+            song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
+            // song.play();
             drawCubes();
 
             ready = true;
