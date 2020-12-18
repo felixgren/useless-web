@@ -6,7 +6,7 @@
 :root {
     --public-sans-font: 'Public Sans', sans-serif;
     --roboto-font: 'Roboto', sans-serif;
-    --dev-background: tomato;
+    --dev-background: black;
 }
 
 body {
@@ -14,6 +14,7 @@ body {
 }
 
 p {
+    display: none; /* Hides timers */
     font-family: var(--roboto-font);
     font-size: 24px;
     color: white;
