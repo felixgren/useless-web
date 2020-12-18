@@ -221,3 +221,12 @@ else if (time > 10) {
     }
     cubesGroup.rotation.y = Math.sin(time * 0.5) * 9;
 }
+
+// Anim 4 rotation tests
+
+// cube.position.z = Math.sin((time * 3) + Math.sqrt(currentX * currentX + currentY * currentY))
+// cube.rotation.x = time * 1.3;
+// cube.rotation.x += 0.03 * delta;
+// cube.rotation.x = Math.sin((time * 3) * 2)
+// cube.rotation.x += (Math.sin(0.03 * delta) * 2)
+// cube.rotation.x += (0.03 * delta / (cubesGroup.scale.x > 0.3 ? cubesGroup.scale.x * 0.7 : 1));

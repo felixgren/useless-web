@@ -56,6 +56,7 @@ function init() {
         audioFile, // songURL
         function (buffer) { // onLoad callback
             song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
+            // song.offset = 30;
             drawCubes();
 
             ready = true;
@@ -134,7 +135,8 @@ function animate(timestamp) {
             return timeToStart = timeOrigin;
         }
 
-        const time = timeOrigin - timeToStart; // Time used for timing & animations
+        let time = timeOrigin - timeToStart; // Time used for timing & animations
+        // time += 30;
 
         pTag2.innerHTML = `Time start: ${time}`;
 
@@ -172,7 +174,7 @@ function animate(timestamp) {
             }
 
             // THIRD - FLOATING (needs work)
-            else if (time > 25 && time < 40) {
+            else if (time > 25 && time < 37.5) {
 
                 if (cubeCount.x === 10) {
                     scene.remove(cubesGroup)
@@ -190,7 +192,7 @@ function animate(timestamp) {
             }
 
             // FORTH - SQUARE PATTERN
-            else if (time > 40 && time < 53) {
+            else if (time > 37.5 && time < 50) {
 
                 if (cubeSpacing.x === 4) {
                     scene.remove(cubesGroup)
@@ -204,19 +206,19 @@ function animate(timestamp) {
                 let currentY = cube.position.y
 
                 cube.position.z = Math.sin((time * 3) + Math.sqrt(currentX * currentX + currentY * currentY))
-                cube.rotation.x = time * 1.3;
+                cube.rotation.x = time * 1.5;
 
                 cubesGroup.rotation.y = Math.sin(time * 0.5) * 0.2;
 
-                cubesGroup.scale.y = Math.sin(time * 0.2) * 0.8;
-                cubesGroup.scale.x = Math.sin(time * 0.2) * 0.8;
+                cubesGroup.scale.y = Math.sin(time * 0.22) * 1.1;
+                cubesGroup.scale.x = Math.sin(time * 0.22) * 1.1;
 
                 if (time > 50) { // Can be used for outro effect
                 }
             }
 
             // FIFTH - SQUARE PATTERN PT.2
-            else if (time > 53 && time < 70) {
+            else if (time > 50 && time < 70) {
 
                 if (cubeSpacing.x === 1.1) {
                     scene.remove(cubesGroup)
