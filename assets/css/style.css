@@ -6,7 +6,7 @@
 :root {
     --public-sans-font: 'Public Sans', sans-serif;
     --roboto-font: 'Roboto', sans-serif;
-    --dev-background: tomato;
+    --dev-background: black;
 }
 
 body {
@@ -14,6 +14,42 @@ body {
 }
 
 p {
+    display: none; /* Hides timers */
     font-family: var(--roboto-font);
-    font-size: 32px;
+    font-size: 24px;
+    color: white;
+    position: absolute;
+}
+
+p:nth-child(2){
+    top: 50px;
+}
+
+.overlay {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    background-color: #101010;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-button {
+    margin-bottom: 100px;
+    pointer-events: none;
+    border: none;
+    padding: 5px 30px;
+    text-decoration: none;
+    background-color: #101010;
+    color: #fff;
+    font-family: var(--roboto-font);
+    font-size: 30px;
+    transition: 200ms;
+}
+
+#start-button:hover {
+    background-color: #eee;
+    color: black;
 }
