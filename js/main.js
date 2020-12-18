@@ -3,7 +3,7 @@ import { OrbitControls } from 'https://unpkg.com/three@0.123.0/examples/jsm/cont
 
 const clock = new THREE.Clock();
 
-let cubes, cubesGroup, cube, controls, camera, scene, renderer;
+let cube, cubes, cubesGroup, scene, camera, renderer, controls, song;
 
 let geometry, material;
 
@@ -15,14 +15,16 @@ let ready = false;
 let clicked = false;
 let timeToStart;
 
-let song;
-
-const overlay = document.querySelector(".overlay");
-const startButton = document.querySelector("#start-button");
+const overlay = document.querySelector('.overlay');
+const startButton = document.querySelector('#start-button');
 startButton.addEventListener('click', function () {
     overlay.remove();
     clicked = true;
-    song.play();
+    if (song.context.state === 'suspended') {
+        song.context.resume().then(() => {
+            console.log('Playback resumed!');
+        })
+    }
 });
 
 init();
@@ -54,18 +56,15 @@ function init() {
         audioFile, // songURL
         function (buffer) { // onLoad callback
             song = new THREE.Audio(listener).setBuffer(buffer); // Instantiate audio object 'song' & set audio buffer to it
-            // song.play();
             drawCubes();
 
             ready = true;
-            console.log("Ready!");
+            console.log('Ready!');
         },
         function (xhr) { // onProgress callback
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
         }
     )
-
-    // drawCubes();
 
     window.addEventListener('resize', () => {
         const width = window.innerWidth;
@@ -118,14 +117,14 @@ function animate(timestamp) {
 
     let timeOrigin = timestamp * 0.001; // Time elapsed ms → seconds 
 
-    let pTag = document.querySelector(".time-display")
-    let pTag2 = document.querySelector(".time-display-2")
+    let pTag = document.querySelector('.time-display')
+    let pTag2 = document.querySelector('.time-display-2')
     pTag.innerHTML = `Time origin: ${timeOrigin}`;
 
     if (ready) {
-        startButton.innerHTML = "Start!"
-        startButton.style.border = "1px solid white";
-        startButton.style.pointerEvents = "auto";
+        startButton.innerHTML = 'Start!'
+        startButton.style.border = '1px solid white';
+        startButton.style.pointerEvents = 'auto';
     }
 
     if (ready && clicked) {
@@ -148,6 +147,7 @@ function animate(timestamp) {
                     Object.assign(cubeSpacing, { x: 1.5, y: 1.5, z: 1.5 })
                     Object.assign(cubeSize, { x: 1, y: 1, z: 1 })
                     drawCubes();
+                    song.play();
                 }
                 cube.position.x = Math.tan(time * 0.6) * (0.2 * key);
                 cube.scale.x = Math.sin(time) * 5;
