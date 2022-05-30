@@ -2,7 +2,7 @@
 
 # The Useless Web
 
-<strong>WIP LIVE: https://www.uselesscube.com/</strong>
+<strong>WIP LIVE: [useless-web.vercel.app](https://useless-web.vercel.app/)</strong>
 
 Project to create a useless website!
 
